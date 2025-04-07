@@ -71,6 +71,7 @@ jobs:
       run: |
         cd android/kernel
         git clone -b v0.9.5 https://github.com/tiann/KernelSU.git
+        ln -s KernelSU drivers/kernelsu
         export PATH="${GITHUB_WORKSPACE}/android/toolchains/proton-clang/bin:$PATH"
         export ARCH=arm64
         export CROSS_COMPILE=aarch64-linux-gnu-
