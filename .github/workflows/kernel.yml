@@ -10,24 +10,24 @@ on:
       KERNEL_TREE:
         description: 'Kernel tree URL'
         required: true
-        default: 'https://github.com/carlodandan/android_kernel_realme_sm6225'
+        default: 'https://github.com/Pierre2324/NGK_android_kernel_xiaomi_sdm845.git'
       KERNEL_BRANCH:
         description: 'Kernel tree Branch'
         required: true
-        default: 'lineage-21'
+        default: 't-caf-latest'
       KERNEL_DEFCONFIG:
         description: 'Kernel defconfig'
         required: true
-        default: 'vendor/sm6225-perf_defconfig'
+        default: 'nogravity-dipper_defconfig'
       KERNEL_IMAGE_NAME:
         description: 'Kernel image name'
         required: true
-        default: 'Image.gz'
+        default: 'Image.gz-dtb'
       LLVM_IAS:
         description: 'Use Integrated Assembler?'
         required: true
         type: choice
-        default: 'LLVM_IAS=1'
+        default: 'LLVM_IAS=0'
         options:
         - LLVM_IAS=1
         - LLVM_IAS=0
@@ -76,6 +76,7 @@ jobs:
         export CROSS_COMPILE_ARM32=arm-linux-gnueabi-
         export LD_LIBRARY_PATH="${GITHUB_WORKSPACE}/android/toolchains/proton-clang/lib"
         if [ -z ${{ inputs.EXTRA_CMDS }} ]; then
+          cp arch/arm64/boot/dts/qcom/SE_NSE/SE/* arch/arm64/boot/dts/qcom/
           make -j$(nproc --all) CC=clang O=out LD=ld.lld LLVM=1 ${{ inputs.LLVM_IAS }} ${{ inputs.KERNEL_DEFCONFIG }}
           make -j$(nproc --all) CC=clang O=out LD=ld.lld LLVM=1 ${{ inputs.LLVM_IAS }} 
         else
